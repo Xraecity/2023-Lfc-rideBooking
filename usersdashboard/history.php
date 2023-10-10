@@ -243,7 +243,7 @@ try {
                                                 <input type="text" hidden name="booking_id" value="<?= $booking['id']; ?>">
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-warning">Yes, cancel</button>
+                                                    <button type="submit" class="btn btn-warning">Yes, cancel oo</button>
                                                 </div>
                                             </div>
                                         </div>
