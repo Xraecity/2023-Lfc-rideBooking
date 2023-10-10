@@ -36,27 +36,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<form method="post">
-                                        <div class="modal fade" id="edit<?= $booking['id']; ?>">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-primary text-light">
-                                                    <h5 class="modal-title">Edit Pickup Address</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p class="alert alert-success">Please Edit your pickup address for Ref ID: <strong>#<?= $booking['uniqueID']; ?></strong> before the count down</p>
-                                                    <label for="location-input">Address</label>
-                                                    <input type="text" class="form-control" name="address" id="location-input" value="<?= $booking['address']; ?>" placeholder="<?= $booking['address']; ?>" required>
-                                                    <label for="locality-input">City</label>
-                                                    <input type="text" class="form-control" name="city" id="locality-input" value="<?= $booking['city']; ?>" placeholder="<?= $booking['city']; ?>" required>
-                                                </div>
-                                                <input type="text" hidden name="booking_id" value="<?= $booking['id']; ?>">
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
