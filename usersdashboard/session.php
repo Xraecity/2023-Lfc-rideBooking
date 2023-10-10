@@ -31,20 +31,4 @@ $_SESSION['last_activity'] = time();
 
 
 
-
-$email = $_SESSION['email'];
-
-$stmt = $db->prepare("SELECT * FROM users_registration WHERE email = ?");
-$stmt->execute([$email]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$_SESSION['user_id'] = $user['id'];
-
-
-// Display user data
-if (!$user) {
-    header("location: ../login");
-    // Display other user information
-}
-
 ?>
