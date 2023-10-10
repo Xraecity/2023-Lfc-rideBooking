@@ -3,7 +3,10 @@ include 'session.php';
 // Display the dashboard content for logged-in users
 include 'fetchDB.php';
 
-    
+if (!isset($_SESSION['email'])) {
+    header("Location: ../login"); // Redirect to the login page if the user is not logged in
+    exit;
+} 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $situation = $_POST['situation'];
