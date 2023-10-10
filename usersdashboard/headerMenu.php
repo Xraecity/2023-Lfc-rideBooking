@@ -37,7 +37,7 @@ $_SESSION['user_id'] = $user['id'];
 
 // Display user data
 if (!$user) {
-    header("location: index.php");
+    header("location: ../login");
     // Display other user information
 }
     ?>
