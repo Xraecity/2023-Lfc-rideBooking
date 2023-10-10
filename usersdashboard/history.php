@@ -21,41 +21,42 @@ try {
 }
 ?>
   
+  
+
+  <!-- cancel ride  -->
   <?php
 
-include 'fetchDB.php'; // Include your database connection file
+            include 'fetchDB.php'; // Include your database connection file
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the form was submitted via POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Check if the form was submitted via POST
 
-    // Get the values from the form
-    $bookingId = $_POST['booking_id'];
-    $newAddress = $_POST['address'];
-    $newCity = $_POST['city'];
+                // Get the values from the form
+                $cancel_ride = $_POST['cancel_ride'];
+                $bookingId = $_POST['booking_id'];
 
-    // Prepare an SQL UPDATE query
-    $updateQuery = "UPDATE ridebooking SET address = :address, city = :city WHERE id = :id";
+                // Prepare an SQL UPDATE query
+                $updateQuery = "UPDATE ridebooking SET schedule = :cancel_ride WHERE id = :id";
 
-    try {
-        // Prepare the SQL statement
-        $stmt = $db->prepare($updateQuery);
+                try {
+                    // Prepare the SQL statement
+                    $stmt = $db->prepare($updateQuery);
 
-        // Bind parameters
-        $stmt->bindParam(':address', $newAddress, PDO::PARAM_STR);
-        $stmt->bindParam(':city', $newCity, PDO::PARAM_STR);
-        $stmt->bindParam(':id', $bookingId, PDO::PARAM_INT);
+                    // Bind parameters
+                    $stmt->bindParam(':cancel_ride', $cancel_ride, PDO::PARAM_STR);
+                    $stmt->bindParam(':id', $bookingId, PDO::PARAM_INT);
 
-        // Execute the update query
-        $stmt->execute();
-        $successUpdate = 'updated successfully!.';
-        // Redirect back to the previous page or wherever you need to go
-        header("location: history.php?success=" . urlencode($successUpdate));
+                    // Execute the update query
+                    $stmt->execute();
+                    $cancelUpdate = 'cancelled successfully!.';
+                    // Redirect back to the previous page or wherever you need to go
+                    header("location: history.php?cancelled=" . urlencode($cancelUpdate));
 
-    } catch (PDOException $e) {
-        // Handle any database errors here
-        echo "Error: " . $e->getMessage();
-    }
-}
+                } catch (PDOException $e) {
+                    // Handle any database errors here
+                    echo "Error: " . $e->getMessage();
+                }
+            }
 
 ?>
 
@@ -105,6 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             <?php echo urldecode($_GET['successUpdate']); ?>
                                         </div>
                                 <?php endif; ?>
+                                
+                                <!-- cancelled  -->
+                                <?php if (isset($_GET['cancelUpdate'])) : ?>
+                                        <div class="alert alert-warning">
+                                            <?php echo urldecode($_GET['cancelUpdate']); ?>
+                                        </div>
+                                <?php endif; ?>
+
+
                                 <div class="data-tables datatable-dark">
                                 <?php if (isset($_GET['success'])) : ?>
                                     <div class="alert alert-success">
@@ -129,7 +139,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <td>#<?= $booking['uniqueID'] ?></td>
                                                 <td><?= $booking['address'] ?>, <?= $booking['city'] ?></td>
                                                 <td><?= $booking['num_adult'] ?> Adult(s) | <?= $booking['num_kids'] ?> Kid(s)</td>
-                                                <td><span class="badge badge-success"><?= $booking['schedule'] ?></label></td>
+                                                <td>
+                                                    
+                                                        <span class="badge badge-<?php if ($booking['schedule'] == "cancelled"):?>warning<?php else:?>success<?php endif;?>"><?= $booking['schedule'] ?></span>
+                                                        
+                                                </td>
                                                 <td><?php $timestamp = strtotime($booking['created_at']);
                                                 // Convert the database timestamp to a Unix timestamp
                                                 $formatted_date = date('D jS M, Y, g:ia', $timestamp);
@@ -147,15 +161,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 
                                                 <td>
                                                     <?php if ($booking['schedule'] == "Bi-weekly" && $BiWeeklyAvaliability == $todays): ?>
-                                                        <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#<?= $booking['id']; ?>">Edit pickup</button>
+                                                            <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#edit<?= $booking['id']; ?>">Edit pickup</button>
+                                                            <button class="badge badge-warning text-light p-2" style="border: none" data-toggle="modal" data-target="#cancel<?= $booking['id']; ?>">Cancel Ride</button>
                                                     
                                                         <?php elseif ($booking['schedule'] == "one-time" && $OneTimeAvaliability == $todays): ?>
-                                                        <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#<?= $booking['id']; ?>">Edit pickup</button>
+                                                            <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#edit<?= $booking['id']; ?>">Edit pickup</button>
+                                                            <button class="badge badge-warning text-light p-2" style="border: none" data-toggle="modal" data-target="#cancel<?= $booking['id']; ?>">Cancel Ride</button>
                                                     
                                                         <?php elseif ($booking['schedule'] == "Every Sunday" && $EverySundayAvaliability == $todays): ?>
-                                                        <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#<?= $booking['id']; ?>">Edit Pickup</button>
+                                                            <button class="badge badge-primary p-2" style="border: none" data-toggle="modal" data-target="#edit<?= $booking['id']; ?>">Edit Pickup</button>
+                                                            <button class="badge badge-warning text-light p-2" style="border: none" data-toggle="modal" data-target="#cancel<?= $booking['id']; ?>">Cancel Ride</button>
                                                     <?php else: ?>
-                                                        <button class="badge badge-danger p-2" style="border: none">Unavailable</button>
+                                                        <?php if ($booking['schedule'] == "cancelled"):?>
+                                                            <button class="badge badge-warning p-2" disabled style="border: none">cancelled</button>
+                                                            <?php else: ?>
+                                                                <button class="badge badge-danger p-2" disabled style="border: none">unavaliable</button>
+                                                            <?php endif; ?>
                                                     <?php endif; ?>
                                                 <td>
                                                     <b class="text text-warning">pending</b>
@@ -182,15 +203,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <!-- Modal -->
                                 <?php foreach ($ridebookings as $booking) : ?>
                                     <form method="post">
-                                        <div class="modal fade" id="<?= $booking['id']; ?>">
+                                        <div class="modal fade" id="edit<?= $booking['id']; ?>">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
-                                                <div class="modal-header">
+                                                <div class="modal-header bg-primary text-light">
                                                     <h5 class="modal-title">Edit Pickup Address</h5>
                                                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p class="alert alert-success">Please Edit your pickup address for Ref ID: <?= $booking['uniqueID']; ?> before the count down</p>
+                                                    <p class="alert alert-success">Please Edit your pickup address for Ref ID: <strong>#<?= $booking['uniqueID']; ?></strong> before the count down</p>
                                                     <label for="location-input">Address</label>
                                                     <input type="text" class="form-control" name="address" id="location-input" value="<?= $booking['address']; ?>" placeholder="<?= $booking['address']; ?>" required>
                                                     <label for="locality-input">City</label>
@@ -200,6 +221,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- cancel  -->
+                                <form method="post">
+                                        <div class="modal fade" id="cancel<?= $booking['id']; ?>">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-warning">
+                                                    <h5 class="modal-title">Cancel Ride</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="alert alert-success">Are you sure you want to cancel this ride Ref ID: <strong>#<?= $booking['uniqueID']; ?></strong> </p>
+                                                </div>
+                                                <input type="text" hidden name="cancel_ride" value="cancelled">
+                                                <input type="text" hidden name="booking_id" value="<?= $booking['id']; ?>">
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-warning">Yes, cancel</button>
                                                 </div>
                                             </div>
                                         </div>

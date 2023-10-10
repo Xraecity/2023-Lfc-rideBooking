@@ -25,6 +25,21 @@ include 'fetchDB.php';
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
             };
+
+            $email = $_SESSION['email'];
+
+$stmt = $db->prepare("SELECT * FROM users_registration WHERE email = ?");
+$stmt->execute([$email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$_SESSION['user_id'] = $user['id'];
+
+
+// Display user data
+if (!$user) {
+    header("location: index.php");
+    // Display other user information
+}
     ?>
 
 

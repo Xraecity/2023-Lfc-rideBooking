@@ -1,4 +1,5 @@
 <?php
+
 require_once '../connection/connect.php';
 
 // Retrieve all data from the 'users_registration' table
