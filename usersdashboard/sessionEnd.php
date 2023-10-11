@@ -99,7 +99,7 @@ session_start();
                 <form method="POST">
                     <div class="login-form-head">
                         <h4>Session Timeout</h4>
-                        <p>Oups! <b><?= $user['fname']; ?></b> you've been logged out!.</p>
+                        <p>Oops! <b><?= $user['fname']; ?></b> you've been logged out!.</p>
                         <?php if (isset($error_message)): ?>
                             <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
                                 <strong>Hello <?= $user['fname']; ?>!</strong> <?= $error_message ?> or click <a href="../login"> here</a> to manually login

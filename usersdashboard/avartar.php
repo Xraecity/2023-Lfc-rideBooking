@@ -73,48 +73,50 @@ if ($row) {
 <!-- Display the user's avatar -->
 
 <form class="needs-validation"  method="POST" novalidate="">
+
     <div class="row">
         <div class="col-12">
             <img src="<?php echo $userAvatar; ?>" alt="User Avatar" class="w-2">
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/yeah.png" >
-                <img src="assets/images/author/yeah.png" class="avatar-img" alt="">  
+             <input type="radio" hidden  name="avatar" class="btn" value="assets/images/author/yeah.png" >
+                <img src="assets/images/author/yeah.png"  class="avatar-img" alt="">   
         </label>
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/bravo.png" >
-                <img src="assets/images/author/bravo.png" class="avatar-img" alt="">
+             <input type="radio" hidden  name="avatar" class="btn" value="assets/images/author/bravo.png" >
+                <img src="assets/images/author/bravo.png"  class="avatar-img" alt=""> 
         </label>
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/happy.png" >
-                <img src="assets/images/author/happy.png" class="avatar-img" alt="">
+             <input type="radio" hidden  name="avatar" class="btn" value="assets/images/author/happy.png" >
+                <img src="assets/images/author/happy.png"  class="avatar-img" alt=""> 
         </label>
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/here.png" >
-                <img src="assets/images/author/here.png" class="avatar-img" alt="">
+             <input type="radio" hidden  name="avatar" class="btn" value="assets/images/author/here.png" >
+                <img src="assets/images/author/here.png"  class="avatar-img" alt=""> 
         </label>
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/yeah.png" >
-                <img src="assets/images/author/yeah.png" class="avatar-img" alt="">
+             <input type="radio" hidden name="avatar" class="btn" value="assets/images/author/yeah.png" >
+                <img src="assets/images/author/yeah.png"  class="avatar-img" alt=""> 
         </label>
         </div>
         <div class="col-4 zoom">
             <label>
-             <input type="radio" name="avatar" class="btn" value="assets/images/author/bravo.png" >
-                <img src="assets/images/author/bravo.png" class="avatar-img" alt="">
+             <input type="radio" hidden  name="avatar" id="avatar" class="btn" value="assets/images/author/bravo.png" >
+                <img src="assets/images/author/bravo.png"  class="avatar-img" alt=""> 
         </label>
         </div>
     </div>
-    
+
+    <div id="selected" class="alert alert-success"></div>
     <button type="submit" class="btn text-light user-profile mt-4 pr-4 pl-4">Update avatar</button>
 </form>
                                         
@@ -122,6 +124,16 @@ if ($row) {
                                         
    
 <style>
+       
+
+        .selected {
+            background-color: #8914fe;
+            border-radius: 50%;
+            width: 100%;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;  transform: scale(1.2);
+        }
         img.avatar-img{
             width: 70%;
             border: 2px solid rgb(236, 236, 236);
@@ -137,4 +149,26 @@ if ($row) {
             background: #8914fe ;
             transition: transform 0.3s ease;  transform: scale(1.2);
         }
+        #selected{
+            display: none;
+        }
     </style>
+
+    <script>
+        const avatarImages = document.querySelectorAll('.avatar-img');
+
+            function handleImageClick(event) {
+                // Remove the 'selected' class from all images
+                avatarImages.forEach(img => img.classList.remove('selected'));
+                
+                // Add the 'selected' class to the clicked image
+                event.target.classList.add('selected');
+
+                // Display the selected value (optional)
+                const selectedValue = event.target.parentElement.querySelector('input').value;
+                console.log(`Selected Value: ${selectedValue}`);
+            }
+
+            // Add a click event listener to each image
+            avatarImages.forEach(img => img.addEventListener('click', handleImageClick));
+    </script>

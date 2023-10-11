@@ -1,23 +1,5 @@
 <?php
 include 'session.php';
-include 'fetchDB.php';
-
-// Get the current date
-$currentDate = new DateTime();
-
-// Calculate the date of the next Sunday
-$nextSunday = clone $currentDate;
-$nextSunday->modify('next Sunday');
-
-// Calculate the date of the second Sunday
-$secondSunday = clone $nextSunday;
-$secondSunday->modify('+1 week');
-
-// Format the dates
-$nextSundayFormatted = $nextSunday->format('l jS M');
-$secondSundayFormatted = $secondSunday->format('l jS M');
-
-
 ?>
 
 <!Doctype html>
@@ -65,6 +47,23 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
        
                 
                 <?php
+
+                        include 'fetchDB.php';
+                        // Get the current date
+                        $currentDate = new DateTime();
+
+                        // Calculate the date of the next Sunday
+                        $nextSunday = clone $currentDate;
+                        $nextSunday->modify('next Sunday');
+
+                        // Calculate the date of the second Sunday
+                        $secondSunday = clone $nextSunday;
+                        $secondSunday->modify('+1 week');
+
+                        // Format the dates
+                        $nextSundayFormatted = $nextSunday->format('l jS M');
+                        $secondSundayFormatted = $secondSunday->format('l jS M');
+
 
                         $ridebookingData = array();
                                         
@@ -135,7 +134,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                     if ($scheduleEverySunday) {
                         // Display the alert message if the schedule is "Every Sunday"
                         $dis = '<div class="alert alert-warning pl-4 mt-5" role="alert">
-                            <h4 class="alert-heading">Oups!</h4>
+                            <h4 class="alert-heading">Oops!</h4>
                             <p>Aww, sorry you are unable to book another ride!.</p>
                             <hr>
                             <p class="mb-0">"We apologize, but it seems you are unable to book another ride throughtout this year till further notice due to your schedule being set for every Sunday.
@@ -145,7 +144,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                     if ($scheduleBiWeekly) {
                         // Display the alert message if the schedule is "Every Sunday"
                         $dis = '<div class="alert alert-warning pl-4 mt-5" role="alert">
-                            <h4 class="alert-heading">Oups!</h4>
+                            <h4 class="alert-heading">Oops!</h4>
                             <p>Aww, sorry you are unable to book another ride at till upper week.</p>
                             <hr>
                             <p class="mb-0">"We apologize, but it seems you are unable to book another ride until after <b>' .$secondSundayFormatted. '</b> due to your schedule being set for Bi weekly.
@@ -154,7 +153,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                     }if ($scheduleOneTime) {
                         // Display the alert message if the schedule is "Every Sunday"
                         $dis = '<div class="alert alert-warning pl-4 mt-5" role="alert">
-                            <h4 class="alert-heading">Oups!</h4>
+                            <h4 class="alert-heading">Oops!</h4>
                             <p>Aww, sorry you are unable to book another ride.</p>
                             <hr>
                             <p class="mb-0">"We apologize, but it seems you are unable to book another ride till next week Saturday due to your schedule being set one time (Tomorrow ' .$OneTimeAvaliability . ' ).

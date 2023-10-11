@@ -1,32 +1,33 @@
 <?php
 include 'session.php';
-include 'fetchDB.php';
-
-// Fetch ridebooking data from the database
-try {
-    $user_id = $_SESSION['user_id']; // Assuming user_id is stored in the session
-
-    $query = "SELECT rb.*
-    FROM ridebooking rb
-    INNER JOIN users_registration ur ON rb.user_id = ur.id
-    WHERE rb.user_id = ?
-    ORDER BY rb.created_at DESC"; // Specify 'rb' before 'created_at' to indicate the 'created_at' column from 'ridebooking' table
-
-    
-    $stmt = $db->prepare($query);
-    $stmt->execute([$user_id]);
-    $ridebookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
 ?>
   
   
 
   <!-- cancel ride  -->
   <?php
+  
+                        include 'fetchDB.php'; // Include your database connection file
 
-            include 'fetchDB.php'; // Include your database connection file
+                    // Fetch ridebooking data from the database
+                    try {
+                        $user_id = $_SESSION['user_id']; // Assuming user_id is stored in the session
+
+                        $query = "SELECT rb.*
+                        FROM ridebooking rb
+                        INNER JOIN users_registration ur ON rb.user_id = ur.id
+                        WHERE rb.user_id = ?
+                        ORDER BY rb.created_at DESC"; // Specify 'rb' before 'created_at' to indicate the 'created_at' column from 'ridebooking' table
+
+                        
+                        $stmt = $db->prepare($query);
+                        $stmt->execute([$user_id]);
+                        $ridebookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+
+                    
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Check if the form was submitted via POST
