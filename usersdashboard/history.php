@@ -39,7 +39,17 @@ include 'session.php';
                             </ul>
                         </div>
                     </div>
-                    <?php include 'subMenu.php'; ?>
+                    <div class="col-sm-6 clearfix">
+    <div class="user-profile pull-right">
+        <img class="avatar user-thumb" src="<?php echo $userAvatar; ?>" alt="avatar" style="width: 50px">
+        <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= $user['fname']; ?> <i class="fa fa-angle-down"></i></h4>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Message</a>
+            <a class="dropdown-item" href="profile.php">Profile</a>
+            <a class="dropdown-item" href="logout.php">Log Out</a>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
             <?php
