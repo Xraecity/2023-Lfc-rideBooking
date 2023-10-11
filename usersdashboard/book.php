@@ -69,7 +69,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                         $ridebookingData = array();
                                         
                         // Fetch ridebooking data from the database
-                        $query = "SELECT * FROM ridebooking WHERE user_id = ? ORDER BY created_at DESC";
+                        $query = "SELECT * FROM ridebooking WHERE user_id = ?";
                         $dis = ''; // Initialize the message
                         $scheduleEverySunday = false; // Initialize a flag
                         $scheduleBiWeekly = false; // Initialize a flag
