@@ -69,7 +69,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                         $ridebookingData = array();
                                         
                         // Fetch ridebooking data from the database
-                        $query = "SELECT * FROM ridebooking WHERE user_id = :user_id ORDER BY created_at DESC";
+                        $query = "SELECT * FROM ridebooking WHERE user_id = ? ORDER BY created_at DESC";
                         $dis = ''; // Initialize the message
                         $scheduleEverySunday = false; // Initialize a flag
                         $scheduleBiWeekly = false; // Initialize a flag
@@ -80,7 +80,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                             $stmt = $db->query($query);
 
                                 // Bind the user_id parameter
-                                    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID value
+                                    $stmt->bindParam(1, $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID value
                                 
                                     // Execute the query
                                     $stmt->execute();
