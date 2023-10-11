@@ -79,6 +79,12 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                             // Prepare and execute the query
                             $stmt = $db->query($query);
 
+                                // Bind the user_id parameter
+                                    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Replace $user_id with the actual user ID value
+                                
+                                    // Execute the query
+                                    $stmt->execute();
+
                             // Check if there are any records
                             if ($stmt->rowCount() > 0) {
                                 // Loop through the results and store data in the array
