@@ -5,7 +5,44 @@ include 'session.php';
   
 
   <!-- cancel ride  -->
-  <?php
+  
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>My Ride History</title>
+    <?php include "links.php"; ?>
+</head>
+
+<body class="body-bg">
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <!-- <div id="preloader">
+        <div class="loader"></div>
+    </div> -->
+    <!-- preloader area end -->
+    <!-- main wrapper start -->
+    <?php include ("headerMenu.php"); ?>
+    <div class="main-content-inner">
+        <div class="container">
+            <div class="row">
+    <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">My Ride History</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="./">Dashboad</a></li>
+                                <li><span>History</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php include 'subMenu.php'; ?>
+                </div>
+            </div>
+            <?php
   
                         include 'fetchDB.php'; // Include your database connection file
 
@@ -17,7 +54,7 @@ include 'session.php';
                         FROM ridebooking rb
                         INNER JOIN users_registration ur ON rb.user_id = ur.id
                         WHERE rb.user_id = ?
-                        ORDER BY rb.created_at DESC"; // Specify 'rb' before 'created_at' to indicate the 'created_at' column from 'ridebooking' table
+                        ORDER BY created_at DESC"; // Specify 'rb' before 'created_at' to indicate the 'created_at' column from 'ridebooking' table
 
                         
                         $stmt = $db->prepare($query);
@@ -61,42 +98,6 @@ include 'session.php';
 
 ?>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>My Ride History</title>
-    <?php include "links.php"; ?>
-</head>
-
-<body class="body-bg">
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start -->
-    <!-- <div id="preloader">
-        <div class="loader"></div>
-    </div> -->
-    <!-- preloader area end -->
-    <!-- main wrapper start -->
-    <?php include ("headerMenu.php"); ?>
-    <div class="main-content-inner">
-        <div class="container">
-            <div class="row">
-    <!-- page title area start -->
-            <div class="page-title-area">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <div class="breadcrumbs-area clearfix">
-                            <h4 class="page-title pull-left">My Ride History</h4>
-                            <ul class="breadcrumbs pull-left">
-                                <li><a href="./">Dashboad</a></li>
-                                <li><span>History</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <?php include 'subMenu.php'; ?>
-                </div>
-            </div>
                     <!-- Dark table start -->
                     <div class="col-12 mt-5">
                         <div class="card">

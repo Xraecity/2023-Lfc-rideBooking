@@ -1,36 +1,5 @@
 <?php
 include 'session.php';
-// Display the dashboard content for logged-in users
-include 'fetchDB.php';
-
-if (!isset($_SESSION['email'])) {
-    header("Location: ../login"); // Redirect to the login page if the user is not logged in
-    exit;
-} 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $situation = $_POST['situation'];
-    $unique_id = $_POST['unique_id'];
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-
-    // Server-side validation
-    if (empty($situation) || empty($subject)|| empty($unique_id) || empty($message)) {
-        $empty = "Please fill in all the required fields.";
-    } else {
-        // Insert data into the database (you need to create the table and connection)
-        $query = "INSERT INTO report (situation, subject, unique_id, message) VALUES (?, ?, ?, ?)";
-        $stmt = $db->prepare($query);
-        $stmt->execute([$situation, $subject, $unique_id, $message]);
-
-        if ($stmt) {
-            $successful = "Message Sent sucessfully";
-            header("refresh:5;url=report.php");
-        } else {
-            $error = "Error inserting data into the database.";
-        }
-    }
-}
 ?>
 <!Doctype html>
 <html class="no-js" lang="en">
@@ -63,27 +32,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php include 'submenu.php'; ?>
                 </div>
             </div>
+                    <?php
+                    // Display the dashboard content for logged-in users
+                    include 'fetchDB.php';
 
-                <form class="needs-validation" novalidate="" method="POST">
-                    <div class="row">
-                        <div class="col-lg-4 mt-5">
-                            <div class="card" style="border-bottom: 5px solid purple; box-shadow: 9px 2px 9px black;">
-                                <div class="card-body">
-                                    <h4 class="header-title">Information</h4>
-                                        <fieldset disabled>
-                                            <div class="form-group">
-                                                <label for="disabledTextInput">Full name</label>
-                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $user['fname']; ?> <?= $user['lname']; ?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="disabledTextInput">Address</label>
-                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $user['address'] . ", " .$user['city']; ?>">
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                            </div>
-                        </div>
-                        <?php 
+                    if (!isset($_SESSION['email'])) {
+                        header("Location: ../login"); // Redirect to the login page if the user is not logged in
+                        exit;
+                    } 
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        $situation = $_POST['situation'];
+                        $unique_id = $_POST['unique_id'];
+                        $subject = $_POST['subject'];
+                        $message = $_POST['message'];
+
+                        // Server-side validation
+                        if (empty($situation) || empty($subject)|| empty($unique_id) || empty($message)) {
+                            $empty = "Please fill in all the required fields.";
+                        } else {
+                            // Insert data into the database (you need to create the table and connection)
+                            $query = "INSERT INTO report (situation, subject, unique_id, message) VALUES (?, ?, ?, ?)";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute([$situation, $subject, $unique_id, $message]);
+
+                            if ($stmt) {
+                                $successful = "Message Sent sucessfully";
+                                header("refresh:5;url=report.php");
+                            } else {
+                                $error = "Error inserting data into the database.";
+                            }
+                        }
+                    }
+                    ?>
+
+<?php 
                             include 'fetchDB.php';
                              try {
                                 $stmt = $db->prepare("SELECT * FROM report WHERE unique_id = ?");
@@ -114,6 +97,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <?php if(isset($empty)):?>  
                                         <div class="alert alert-danger"><?= $empty; ?></div>
                                     <?php endif; ?>
+                <form class="needs-validation" novalidate="" method="POST">
+                    <div class="row">
+                        <div class="col-lg-4 mt-5">
+                            <div class="card" style="border-bottom: 5px solid purple; box-shadow: 9px 2px 9px black;">
+                                <div class="card-body">
+                                    <h4 class="header-title">Information</h4>
+                                        <fieldset disabled>
+                                            <div class="form-group">
+                                                <label for="disabledTextInput">Full name</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $user['fname']; ?> <?= $user['lname']; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="disabledTextInput">Address</label>
+                                                <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $user['address'] . ", " .$user['city']; ?>">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                            </div>
+                        </div>
                                     <h4 class="header-title">Report | Complaint | Message | Review</h4>
                                     <p class="text-muted mb-3">Create a ticket for report or complain or write a message to the administrative. You can as well write a review </p>
                                 
