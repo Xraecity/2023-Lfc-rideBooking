@@ -69,16 +69,26 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                         $ridebookingData = array();
                                         
                         // Fetch ridebooking data from the database
-                        $query = "SELECT * FROM ridebooking ORDER BY created_at DESC";
+                        $query = "SELECT rb.*
+                        FROM ridebooking rb
+                        INNER JOIN users_registration ur ON rb.user_id = ur.id
+                        WHERE rb.user_id = :user_id
+                        ORDER BY rb.created_at DESC";
                         $dis = ''; // Initialize the message
                         $scheduleEverySunday = false; // Initialize a flag
                         $scheduleBiWeekly = false; // Initialize a flag
                         $scheduleOneTime = false; // Initialize a flag
 
                         try {
-                            // Prepare and execute the query
-                            $stmt = $db->query($query);
-
+                            // Prepare the query
+                            $stmt = $db->prepare($query);
+                        
+                            // Bind the user_id to the :user_id placeholder
+                            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                        
+                            // Execute the query
+                            $stmt->execute();
+                        
                             // Check if there are any records
                             if ($stmt->rowCount() > 0) {
                                 // Loop through the results and store data in the array
@@ -121,8 +131,7 @@ $secondSundayFormatted = $secondSunday->format('l jS M');
                                         break; // Exit the loop, no need to check further
                                     }
 
-                        }
-                                        
+                        }         
                     if ($scheduleEverySunday) {
                         // Display the alert message if the schedule is "Every Sunday"
                         $dis = '<div class="alert alert-warning pl-4 mt-5" role="alert">
