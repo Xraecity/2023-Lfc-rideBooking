@@ -43,45 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="body-bg">
-    <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- preloader area start -->
-    <!-- <div id="preloader">
-        <div class="loader"></div>
-    </div> -->
-    <!-- preloader area end -->
-    <!-- main wrapper start -->
+    
     <?php include ("headerMenu.php"); ?>
-            <!-- page title area end -->
-            <div class="main-content-inner">
-                <div class="container">
-                    <div class="row">
-            <!-- page title area start -->
-                    <div class="page-title-area">
-                        <div class="row align-items-center">
-                            <div class="col-sm-6">
-                                <div class="breadcrumbs-area clearfix">
-                                    <h4 class="page-title pull-left">Create a Ticket</h4>
-                                    <ul class="breadcrumbs pull-left">
-                                        <li><a href="./">Dashboad</a></li>
-                                        <li><span>Ticket</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 clearfix">
-                                <div class="user-profile pull-right">
-                                    <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                                    <h4 class="user-name dropdown-toggle" data-toggle="dropdown">PRINCE XRAE <i class="fa fa-angle-down"></i></h4>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Message</a>
-                                        <a class="dropdown-item" href="profile.php">Profile</a>
-                                        <a class="dropdown-item" href="#">Log Out</a>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="main-content-inner">
+        <div class="container">
+            <div class="row">
+    <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">My Profile</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="./">Dashboad</a></li>
+                                <li><span>Ticket</span></li>
+                            </ul>
                         </div>
                     </div>
+                    <?php include 'submenu.php'; ?>
+                </div>
+            </div>
 
                 <form class="needs-validation" novalidate="" method="POST">
                     <div class="row">
@@ -91,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <h4 class="header-title">Information</h4>
                                         <fieldset disabled>
                                             <div class="form-group">
-                                                <label for="disabledTextInput">Legal Full name</label>
+                                                <label for="disabledTextInput">Full name</label>
                                                 <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $user['fname']; ?> <?= $user['lname']; ?>">
                                             </div>
                                             <div class="form-group">
