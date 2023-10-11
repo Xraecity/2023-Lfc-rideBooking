@@ -5,7 +5,7 @@ include 'fetchDB.php';
 try {
     $user_id = $_SESSION['user_id']; // Assuming user_id is stored in the session
 
-    $query = "SELECT * FROM ridebooking WHERE user_id = ? ORDER BY created_at ASC";
+    $query = "SELECT * FROM ridebooking WHERE user_id = ? ORDER BY created_at DESC";
     
     $stmt = $db->prepare($query);
     $stmt->execute([$user_id]);
