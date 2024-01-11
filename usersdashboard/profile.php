@@ -66,7 +66,7 @@ include 'session.php';
                                 <div class="card" style="border-bottom: 2px solid #8914fe ">
                                     <div class="card-body">
                                         <h4 class="header-title">Change Avartar</h4>
-                                        <?php include 'avartar.php'; ?>
+                                        <?php include 'avatar.php'; ?>
                                     </div>
                                 </div>
                             </div>

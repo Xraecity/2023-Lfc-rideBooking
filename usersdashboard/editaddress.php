@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $successUpdate = 'updated successfully!.';
         // Redirect back to the previous page or wherever you need to go
-        header("location: history.php?success=" . urlencode($successUpdate));
+        header("location: history.php?addressUpdated=" . urlencode($successUpdate));
 
     } catch (PDOException $e) {
         // Handle any database errors here
